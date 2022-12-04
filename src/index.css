@@ -96,14 +96,14 @@ html {
     }
 
     .word-spacing-wide {
-        word-spacing: 1.125rem;
+        word-spacing: 0.5rem;
     }
 
     .word-spacing-wider {
-        word-spacing: 1.25rem;
+        word-spacing: 0.75rem;
     }
-    
+
     .word-spacing-widest {
-        word-spacing: 1.5rem;
+        word-spacing: 1rem;
     }
 }
