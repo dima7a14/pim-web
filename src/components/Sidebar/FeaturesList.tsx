@@ -12,7 +12,9 @@ const FeatureLink: Component<{ feature: Feature }> = (props) => {
       href={props.feature.path}
       class={clsx(
         "py-3 font-bold  flex flex-row flex-nowrap items-center",
-        Boolean(match()) ? "text-Red-Default" : "text-Neutral-Gray-dark"
+        Boolean(match())
+          ? "text-Red-Default"
+          : "text-Neutral-Gray-Dark dark:text-Neutral-Gray-Light"
       )}
     >
       <props.feature.Icon class="mr-3" />

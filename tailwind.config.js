@@ -14,10 +14,10 @@ module.exports = {
       "Primary-Lightest": "#ebf0ff",
       "Primary-Dark": "#1f58e7",
       "Neutral-Black": "#25282b",
-      "Neutral-Gray-dark": "#52575c",
+      "Neutral-Gray-Dark": "#52575c",
       "Neutral-Gray": "#a0a4a8",
-      "Neutral-Gray-light": "#cacccf",
-      "Neutral-Gray-lighter": "#dbdde0",
+      "Neutral-Gray-Light": "#cacccf",
+      "Neutral-Gray-Lighter": "#dbdde0",
       "Neutral-Divider": "#e8e8e8",
       "Neutral-Background": "#f6f8fb",
       "Neutral-White": "#ffffff",
@@ -33,7 +33,7 @@ module.exports = {
       "Yellow-Dark": "#efad0a",
       "Yellow-Light": "#fcdf98",
       "Yellow-Lightest": "#fff9ed",
-      "Graphics-lines": "#d7dbde",
+      "Graphics-Lines": "#d7dbde",
     },
     fontSize: {
       "2xs": "0.625rem",
@@ -80,4 +80,5 @@ module.exports = {
     },
   },
   plugins: [],
+  darkMode: "class",
 };
