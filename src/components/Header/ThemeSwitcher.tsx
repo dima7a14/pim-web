@@ -1,4 +1,4 @@
-import { createSignal, onMount, onCleanup } from "solid-js";
+import { createSignal, onMount, onCleanup, Switch, Match } from "solid-js";
 import type { Component } from "solid-js";
 import { IoMoon, IoSunny, IoSettings } from "solid-icons/io";
 
@@ -127,9 +127,17 @@ export const ThemeSwitcher: Component = (props) => {
       class="text-Neutral-Gray-Light hover:text-Neutral-Gray text-3xl"
       onClick={handleClick}
     >
-      {currentTheme() === Themes.light && <IoSunny />}
-      {currentTheme() === Themes.dark && <IoMoon />}
-      {currentTheme() === Themes.system && <IoSettings />}
+      <Switch>
+        <Match when={currentTheme() === Themes.light}>
+          <IoSunny />
+        </Match>
+        <Match when={currentTheme() === Themes.dark}>
+          <IoMoon />
+        </Match>
+        <Match when={currentTheme() === Themes.system}>
+          <IoSettings />
+        </Match>
+      </Switch>
     </Button>
   );
 };
