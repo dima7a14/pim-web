@@ -10,7 +10,7 @@ export type AvatarProps = {
 export const Avatar: Component<AvatarProps> = (props) => {
   return (
     <div class="flex flex-row justify-start items-center">
-      <div class="text-4xl p-0 mr-2 rounded-full text-Primary-Default">
+      <div class="text-4xl p-0 mr-2 rounded-full text-blue-600">
         <CgProfile />
       </div>
       {props.name}

@@ -11,10 +11,8 @@ const FeatureLink: Component<{ feature: Feature }> = (props) => {
     <A
       href={props.feature.path}
       class={clsx(
-        "py-3 font-bold  flex flex-row flex-nowrap items-center",
-        Boolean(match())
-          ? "text-Red-Default"
-          : "text-Neutral-Gray-Dark dark:text-Neutral-Gray-Light"
+        "py-3 font-bold flex flex-row flex-nowrap items-center",
+        Boolean(match()) ? "text-red-400" : "text-gray-500 dark:text-gray-300"
       )}
     >
       <props.feature.Icon class="mr-3" />
@@ -26,7 +24,7 @@ const FeatureLink: Component<{ feature: Feature }> = (props) => {
 export const FeaturesList: Component = () => {
   return (
     <div class="px-6 py-3 ">
-      <h5 class="font-normal text-Neutral-Gray uppercase">Features</h5>
+      <h5 class="font-normal text-gray-400 uppercase">Features</h5>
       {Object.values(features).map((feature) => (
         <FeatureLink feature={feature} />
       ))}

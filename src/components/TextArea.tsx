@@ -14,7 +14,7 @@ export const TextArea: Component<TextAreaProps> = (props) => {
     <div class="relative w-full h-full">
       <Show when={iconProps.Icon} keyed>
         {(Icon) => (
-          <div class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none text-Neutral-Gray">
+          <div class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none text-gray-400">
             <Icon />
           </div>
         )}
@@ -22,7 +22,7 @@ export const TextArea: Component<TextAreaProps> = (props) => {
       <textarea
         {...textAreaProps}
         class={clsx(
-          "bg-Neutral-White rounded-3xl py-3 pr-4 text-sm text-Neutral-Gray-dark resize-none",
+          "bg-white rounded-3xl py-3 pr-4 text-sm text-gray-500 resize-none",
           iconProps.Icon ? "pl-10" : "pl-4",
           props.class
         )}

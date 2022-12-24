@@ -18,30 +18,30 @@ export type ButtonProps = {
 function getButtonColors(variant: Required<ButtonProps["variant"]>): string {
   switch (variant) {
     case "primary":
-      return "bg-Primary-Default hover:bg-Primary-Hover text-Neutral-White";
+      return "bg-blue-600 hover:bg-blue-500 text-white border-blue-600";
 
     case "secondary":
-      return "bg-Yellow-Default hover:bg-Yellow-Light text-Neutral-Black";
+      return "bg-yellow-400 hover:bg-yellow-300 text-black border-yellow-400";
 
     case "info":
-      return "bg-Green-Default hover:bg-Green-Light text-Neutral-White";
+      return "bg-green-500 hover:bg-green-400 text-white border-green-500";
 
     case "danger":
-      return "bg-Red-Default hover:bg-Red-Light text-Neutral-White";
+      return "bg-red-400 hover:bg-red-300 text-white border-red-400";
 
     case "transparent":
       return "";
 
     case "default":
     default:
-      return "bg-Neutral-White hover:bg-Neutral-Gray-Lighter text-Neutral-Black";
+      return "bg-white hover:bg-gray-200 dark:bg-gray-500 dark:hover:bg-gray-600 text-gray-900 dark:text-gray-50 border-gray-200 dark:border-gray-600";
   }
 }
 
 export const Button: ParentComponent<ButtonProps> = (props) => {
   const buttonClass = clsx(
     getButtonColors(props.variant),
-    props.disabled ? "opacity-30 cursor-not-allowed" : "",
+    props.disabled ? "opacity-30 cursor-not-allowed border-1" : "",
     props.class
   );
 

@@ -124,7 +124,7 @@ export const ThemeSwitcher: Component = (props) => {
     <Button
       type="button"
       variant="transparent"
-      class="text-Neutral-Gray-Light hover:text-Neutral-Gray text-3xl"
+      class="text-gray-400 hover:text-gray-500 text-3xl"
       onClick={handleClick}
     >
       <Switch>

@@ -8,7 +8,7 @@ import { NotFound } from "./components/NotFound";
 
 const App: Component = () => {
   return (
-    <div class="bg-Neutral-Background dark:bg-Neutral-Gray-Dark text-Neutral-Black dark:text-Neutral-White w-screen h-screen flex flex-row flex-nowrap">
+    <div class="bg-slate-100 dark:bg-slate-800 text-gray-900 dark:text-gray-50 w-screen h-screen flex flex-row flex-nowrap">
       <Sidebar />
       <section class="flex-1 px-9 py-6 relative">
         <div class="mb-8">
