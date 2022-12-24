@@ -72,7 +72,7 @@ module.exports = {
       xs: "0.0625rem",
       sm: "0.25rem",
       default: "0.5rem",
-      full: "9999px",
+      full: "100%",
       lg: "0.75rem",
       xl: "1rem",
       "2xl": "1.5rem",

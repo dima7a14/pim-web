@@ -6,7 +6,7 @@ export const featureRequestsMock: FeatureRequest[] = [
     name: "Feature Request",
     description: "I want to be able to save feature requests",
     author: "Dima",
-    done: false,
+    done: true,
   },
   {
     id: 1,
@@ -29,7 +29,7 @@ export const featureRequestsMock: FeatureRequest[] = [
     name: "Authentication",
     description: "I want to have authentication (by Email).",
     author: "Dima",
-    done: false,
+    done: true,
   },
   {
     id: 4,

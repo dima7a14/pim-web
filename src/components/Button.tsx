@@ -27,7 +27,7 @@ function getButtonColors(variant: Required<ButtonProps["variant"]>): string {
       return "bg-Green-Default hover:bg-Green-Light text-Neutral-White";
 
     case "danger":
-      return "bg-Red-Default hover:bg-Red-Light text-Neutral-Black";
+      return "bg-Red-Default hover:bg-Red-Light text-Neutral-White";
 
     case "transparent":
       return "";
@@ -40,7 +40,6 @@ function getButtonColors(variant: Required<ButtonProps["variant"]>): string {
 
 export const Button: ParentComponent<ButtonProps> = (props) => {
   const buttonClass = clsx(
-    "text-lg p-2 rounded-default",
     getButtonColors(props.variant),
     props.disabled ? "opacity-30 cursor-not-allowed" : "",
     props.class

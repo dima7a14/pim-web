@@ -11,7 +11,7 @@ export const UserMenu: Component<UserMenuProps> = (props) => {
       type="button"
       variant="primary"
       disabled
-      class="text-4xl p-0 mx-2 rounded-full"
+      class="text-4xl p-0 ml-2 rounded-full"
     >
       <CgProfile />
     </Button>

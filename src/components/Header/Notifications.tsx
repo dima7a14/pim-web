@@ -11,7 +11,7 @@ export const Notifications: Component<NotificationsProps> = (props) => {
       type="button"
       disabled
       variant="transparent"
-      class="text-Neutral-Gray-Light hover:text-Neutral-Gray text-3xl"
+      class="text-Neutral-Gray-Light hover:text-Neutral-Gray text-3xl ml-2"
     >
       <IoNotifications />
     </Button>
