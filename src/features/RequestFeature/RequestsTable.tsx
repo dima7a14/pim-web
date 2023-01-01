@@ -30,7 +30,7 @@ export type RequestsTableProps = {
 };
 
 export const RequestsTable: Component<RequestsTableProps> = (props) => {
-  const [isOpen, setIsOpen] = createSignal<boolean>(true);
+  const [isOpen, setIsOpen] = createSignal<boolean>(false);
   const [selectedFeature, setSelectedFeature] = createSignal<
     FeatureRequest | undefined
   >();
