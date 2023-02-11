@@ -1,1 +1,1 @@
-export * from "./NotAuthenticated";
+export * from './NotAuthenticated';

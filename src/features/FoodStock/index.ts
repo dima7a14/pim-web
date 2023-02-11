@@ -1,1 +1,1 @@
-export * from "./FoodStock";
+export * from './FoodStock';
