@@ -14,7 +14,7 @@ export const Input: Component<InputProps> = (props) => {
 		<div class="relative w-full h-full">
 			<Show when={iconProps.Icon} keyed>
 				{(Icon) => (
-					<div class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none text-gray-400">
+					<div class="absolute inset-y-0 left-0 flex items-center pl-4 text-gray-400">
 						<Icon />
 					</div>
 				)}
@@ -22,7 +22,7 @@ export const Input: Component<InputProps> = (props) => {
 			<input
 				{...inputProps}
 				class={clsx(
-					'bg-white rounded-3xl py-3 pr-4 text-sm text-gray-500',
+					'bg-white rounded-3xl py-3 pr-4 text-sm text-gray-500 w-full',
 					iconProps.Icon ? 'pl-10' : 'pl-4',
 					props.class,
 				)}
