@@ -12,15 +12,20 @@ enum Stages {
 }
 
 export const Invitation: Component<InvitationProps> = (props) => {
+	const [invitationToken, setInvitationToken] = createSignal<string>('');
 	const [stage, setStage] = createSignal<Stages>(Stages.checkInvitation);
+	const checkInvitationToken = (token: string) => {
+		setInvitationToken(token);
+		setStage(Stages.signUp);
+	};
 
 	return (
 		<Switch>
 			<Match when={stage() === Stages.checkInvitation}>
-				<CheckInvitation />
+				<CheckInvitation onCheck={checkInvitationToken} />
 			</Match>
 			<Match when={stage() === Stages.signUp}>
-				<SignUp />
+				<SignUp invitationToken={invitationToken()} />
 			</Match>
 		</Switch>
 	);
