@@ -1,23 +1,31 @@
 import type { Component } from 'solid-js';
-import { createSignal, Show } from 'solid-js';
+import { Show } from 'solid-js';
 import { Routes, Route } from '@solidjs/router';
 
 import { features } from './constants/features';
+import { read as readStorage } from './utils/storage';
 import { Authenticated } from './layouts/Authenticated';
 import { NotAuthenticated } from './layouts/NotAuthenticated';
 import { NotFound } from './components/NotFound';
 import { Invitation } from './components/Invitation';
+import { Login } from './components/Login';
 
 const App: Component = () => {
-	const [authenticated, setAuthenticated] = createSignal(false);
+	// TODO: use solid-js stores
+	const cachedData = readStorage();
+	const authenticated = !!cachedData.access_token;
 
 	return (
 		<Show
-			when={authenticated()}
+			when={authenticated}
 			fallback={
 				<NotAuthenticated>
 					<Routes>
-						<Route path="/" component={Invitation} />
+						<Route path="/login" component={Login} />
+						<Route
+							path={['/registration', '/*']}
+							component={Invitation}
+						/>
 					</Routes>
 				</NotAuthenticated>
 			}

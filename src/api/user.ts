@@ -31,7 +31,33 @@ export async function signUp(data: SignUpParams): Promise<APIUser & APIToken> {
 		},
 		body: JSON.stringify(data),
 	});
-	const user = await response.json();
+	const responseData = await response.json();
 
-	return user;
+	if (!response.ok) {
+		throw new Error(responseData.message);
+	}
+
+	return responseData;
+}
+
+type SignInParams = {
+	email: string;
+	password: string;
+};
+
+export async function signIn(data: SignInParams): Promise<APIToken> {
+	const response = await fetch(`${ROOT}/login`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify(data),
+	});
+	const responseData = await response.json();
+
+	if (!response.ok) {
+		throw new Error(responseData.message);
+	}
+
+	return responseData;
 }

@@ -6,6 +6,7 @@ import { createMutation } from '@tanstack/solid-query';
 import { toast } from 'solid-toast';
 
 import { signUp } from '../../api';
+import { saveAccessToken } from '../../utils/storage';
 import { Input } from '../Input';
 import { PasswordInput } from '../PasswordInput';
 import { Button } from '../Button';
@@ -27,7 +28,7 @@ const schema = z.object({
 			required_error: 'Password is required',
 		})
 		.min(1, 'Please enter your password')
-		.min(8, 'You password must have 8 characters or more'),
+		.min(8, 'The password must have 8 characters or more'),
 	invitationToken: z.string(),
 });
 
@@ -52,9 +53,12 @@ export const SignUp: Component<SignUpProps> = (props) => {
 				password: values.password,
 				invitation_token: values.invitationToken,
 			});
+			saveAccessToken(user.access_token);
 		} catch (err) {
 			if (err instanceof Error) {
 				toast.error(err.message);
+			} else {
+				toast.error('Something bad happened!');
 			}
 
 			console.error(err);
