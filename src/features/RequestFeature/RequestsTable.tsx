@@ -118,7 +118,7 @@ export const RequestsTable: Component<RequestsTableProps> = (props) => {
 							<tr>
 								<For each={headerGroup.headers}>
 									{(header) => (
-										<th class="bg-opacity-20 bg-gray-200 dark:bg-gray-400-dark py-5 px-6 font-bold text-left border-b border-b-gray-200 dark:border-b-gray-400">
+										<th class="bg-opacity-20 bg-gray-200 dark:bg-gray-600 py-5 px-6 font-bold text-left border-b border-b-gray-200 dark:border-b-gray-600">
 											<Show when={!header.isPlaceholder}>
 												{flexRender(
 													header.column.columnDef

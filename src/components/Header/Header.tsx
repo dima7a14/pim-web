@@ -9,7 +9,7 @@ export type HeaderProps = {};
 
 export const Header: Component<HeaderProps> = (props) => {
 	return (
-		<header class="flex flex-row flex-nowrap justify-between items-center">
+		<header class="flex flex-row flex-nowrap justify-between items-center content-center">
 			<div>
 				<Search />
 			</div>

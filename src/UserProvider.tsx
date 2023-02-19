@@ -5,7 +5,9 @@ import {
 	Accessor,
 	ParentComponent,
 } from 'solid-js';
+import { useNavigate } from '@solidjs/router';
 
+import { signOut } from './api';
 import {
 	read as readStorage,
 	saveUser,
@@ -30,15 +32,19 @@ export const UserProvider: ParentComponent = (props) => {
 	const [user, setUser] = createSignal<User | null>(
 		readStorage().user ?? null,
 	);
+	const navigate = useNavigate();
 	const userAPI: UserAPI = {
 		user,
 		signIn(data: User) {
 			setUser(data);
 			saveUser(data);
+			navigate('/', { replace: true });
 		},
 		signOut() {
 			setUser(null);
 			clearStorage();
+			signOut();
+			navigate('/login', { replace: true });
 		},
 	};
 
