@@ -19,7 +19,7 @@ export function saveInvitationToken(token: string): void {
 
 export function saveUser(user: Required<StorageData['user']>): void {
 	try {
-		localStorage.setItem(KEY, JSON.stringify(user));
+		localStorage.setItem(KEY, JSON.stringify({ user }));
 	} catch (err) {
 		console.error(err);
 	}
