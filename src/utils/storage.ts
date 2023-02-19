@@ -1,8 +1,12 @@
 const KEY = 'PIM';
 
 export interface StorageData {
-	access_token?: string;
 	invitation_token?: string;
+	user?: {
+		name: string;
+		email: string;
+		access_token: string;
+	};
 }
 
 export function saveInvitationToken(token: string): void {
@@ -13,9 +17,9 @@ export function saveInvitationToken(token: string): void {
 	}
 }
 
-export function saveAccessToken(token: string): void {
+export function saveUser(user: Required<StorageData['user']>): void {
 	try {
-		localStorage.setItem(KEY, JSON.stringify({ access_token: token }));
+		localStorage.setItem(KEY, JSON.stringify(user));
 	} catch (err) {
 		console.error(err);
 	}

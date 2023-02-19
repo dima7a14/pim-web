@@ -1,16 +1,12 @@
-import { API_HOST } from '../config';
+import { axiosInstance } from './common';
 
-const ROOT = `${API_HOST}/invitations`;
+const ROOT = '/invitations';
 
 export async function checkInvitationToken(token: string): Promise<boolean> {
-	const response = await fetch(`${ROOT}/is-valid`, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-		},
-		body: JSON.stringify({ token }),
-	});
-	const data = await response.json();
+	const { data } = await axiosInstance.post<{ valid: boolean }>(
+		`${ROOT}/is-valid`,
+		{ token },
+	);
 
 	return data.valid;
 }

@@ -6,11 +6,21 @@ import { VsMail } from 'solid-icons/vs';
 import { createMutation } from '@tanstack/solid-query';
 import { toast } from 'solid-toast';
 
-import { signIn } from '../../api';
-import { saveAccessToken } from '../../utils/storage';
+import { signIn, getMe } from '../../api';
+import { useUser } from '../../UserProvider';
 import { Input } from '../Input';
 import { PasswordInput } from '../PasswordInput';
 import { Button } from '../Button';
+
+const signInAndGetMe = async (...args: Parameters<typeof signIn>) => {
+	const { access_token } = await signIn(...args);
+	const user = await getMe();
+
+	return {
+		...user,
+		access_token,
+	};
+};
 
 const schema = z.object({
 	email: z
@@ -31,19 +41,24 @@ type SignInForm = z.input<typeof schema>;
 export type LoginProps = {};
 
 export const Login: Component<LoginProps> = (props) => {
+	const userContext = useUser();
 	const login = createMutation({
-		mutationFn: signIn,
+		mutationFn: signInAndGetMe,
 	});
 	const signInForm = createForm<SignInForm>({
 		validate: zodForm(schema),
 	});
 	const onSubmit = async (values: SignInForm) => {
 		try {
-			const data = await login.mutateAsync({
+			const user = await login.mutateAsync({
 				email: values.email,
 				password: values.password,
 			});
-			saveAccessToken(data.access_token);
+			userContext?.signIn({
+				name: user.name,
+				email: user.email,
+				access_token: user.access_token,
+			});
 		} catch (err) {
 			if (err instanceof Error) {
 				toast.error(err.message);

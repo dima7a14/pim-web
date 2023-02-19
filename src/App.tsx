@@ -3,21 +3,19 @@ import { Show } from 'solid-js';
 import { Routes, Route } from '@solidjs/router';
 
 import { features } from './constants/features';
-import { read as readStorage } from './utils/storage';
 import { Authenticated } from './layouts/Authenticated';
 import { NotAuthenticated } from './layouts/NotAuthenticated';
 import { NotFound } from './components/NotFound';
 import { Invitation } from './components/Invitation';
 import { Login } from './components/Login';
+import { useUser } from './UserProvider';
 
 const App: Component = () => {
-	// TODO: use solid-js stores
-	const cachedData = readStorage();
-	const authenticated = !!cachedData.access_token;
+	const userContext = useUser();
 
 	return (
 		<Show
-			when={authenticated}
+			when={!!userContext?.user()}
 			fallback={
 				<NotAuthenticated>
 					<Routes>

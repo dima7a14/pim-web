@@ -6,7 +6,7 @@ import { createMutation } from '@tanstack/solid-query';
 import { toast } from 'solid-toast';
 
 import { signUp } from '../../api';
-import { saveAccessToken } from '../../utils/storage';
+import { useUser } from '../../UserProvider';
 import { Input } from '../Input';
 import { PasswordInput } from '../PasswordInput';
 import { Button } from '../Button';
@@ -39,6 +39,7 @@ export type SignUpProps = {
 };
 
 export const SignUp: Component<SignUpProps> = (props) => {
+	const userContext = useUser();
 	const register = createMutation({
 		mutationFn: signUp,
 	});
@@ -53,7 +54,11 @@ export const SignUp: Component<SignUpProps> = (props) => {
 				password: values.password,
 				invitation_token: values.invitationToken,
 			});
-			saveAccessToken(user.access_token);
+			userContext?.signIn({
+				email: user.email,
+				name: user.name,
+				access_token: user.access_token,
+			});
 		} catch (err) {
 			if (err instanceof Error) {
 				toast.error(err.message);

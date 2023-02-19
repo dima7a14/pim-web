@@ -1,6 +1,6 @@
-import { API_HOST } from '../config';
+import { axiosInstance } from './common';
 
-const ROOT = `${API_HOST}/users`;
+const ROOT = '/users';
 
 export interface APIUser {
 	id: number;
@@ -24,18 +24,12 @@ type SignUpParams = {
 };
 
 export async function signUp(data: SignUpParams): Promise<APIUser & APIToken> {
-	const response = await fetch(`${ROOT}`, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-		},
-		body: JSON.stringify(data),
-	});
-	const responseData = await response.json();
+	const { data: responseData } = await axiosInstance.post<APIUser & APIToken>(
+		ROOT,
+		data,
+	);
 
-	if (!response.ok) {
-		throw new Error(responseData.message);
-	}
+	updateToken(responseData.access_token);
 
 	return responseData;
 }
@@ -46,18 +40,30 @@ type SignInParams = {
 };
 
 export async function signIn(data: SignInParams): Promise<APIToken> {
-	const response = await fetch(`${ROOT}/login`, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-		},
-		body: JSON.stringify(data),
-	});
-	const responseData = await response.json();
+	const { data: responseData } = await axiosInstance.post<APIToken>(
+		`${ROOT}/login`,
+		data,
+	);
 
-	if (!response.ok) {
-		throw new Error(responseData.message);
-	}
+	updateToken(responseData.access_token);
 
 	return responseData;
+}
+
+export async function signOut(): Promise<void> {
+	updateToken();
+
+	return Promise.resolve();
+}
+
+export async function getMe(): Promise<APIUser> {
+	const { data } = await axiosInstance.get<APIUser>(`${ROOT}/me`);
+
+	return data;
+}
+
+function updateToken(token: string = ''): void {
+	axiosInstance.defaults.headers.common.Authorization = token
+		? `Bearer ${token}`
+		: '';
 }
