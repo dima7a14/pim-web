@@ -1,4 +1,4 @@
-import { axiosInstance } from './common';
+import { axiosInstance, updateToken } from './common';
 
 const ROOT = '/users';
 
@@ -60,10 +60,4 @@ export async function getMe(): Promise<APIUser> {
 	const { data } = await axiosInstance.get<APIUser>(`${ROOT}/me`);
 
 	return data;
-}
-
-function updateToken(token: string = ''): void {
-	axiosInstance.defaults.headers.common.Authorization = token
-		? `Bearer ${token}`
-		: '';
 }

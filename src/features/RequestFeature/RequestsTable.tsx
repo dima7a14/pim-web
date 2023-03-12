@@ -1,5 +1,4 @@
-import type { Component } from 'solid-js';
-import { createSignal, For, Show } from 'solid-js';
+import { createSignal, For, Show, Component } from 'solid-js';
 import {
 	flexRender,
 	getCoreRowModel,
@@ -18,11 +17,18 @@ import { BiRegularChevronLeft, BiRegularChevronRight } from 'solid-icons/bi';
 import { AiOutlinePlus, AiFillEdit, AiFillDelete } from 'solid-icons/ai';
 import { VsChromeClose } from 'solid-icons/vs';
 import clsx from 'clsx';
+import { createMutation, useQueryClient } from '@tanstack/solid-query';
+import { toast } from 'solid-toast';
 
+import {
+	createRequestedFeature,
+	updateRequestedFeature,
+	deleteRequestedFeature,
+} from '../../api';
 import { Avatar } from '../../components/Avatar';
 import { FloatButton } from '../../components/FloatButton';
 import { Button } from '../../components/Button';
-import type { FeatureRequest } from './models';
+import { transformFeatureRequest, FeatureRequest } from './models';
 import { RequestFeatureForm } from './RequestFeatureForm';
 
 export type RequestsTableProps = {
@@ -30,6 +36,48 @@ export type RequestsTableProps = {
 };
 
 export const RequestsTable: Component<RequestsTableProps> = (props) => {
+	const queryClient = useQueryClient();
+	const createFeatureMutation = createMutation({
+		mutationFn: createRequestedFeature,
+		onSuccess: (data) => {
+			const transformedData = transformFeatureRequest(data);
+			queryClient.setQueryData(
+				[() => '/requestedFeatures', { id: transformedData.id }],
+				transformedData,
+			);
+			toast.success(`Feature ${data.name} has been created`);
+		},
+		onError: (error) => {
+			toast.error('Oops! Something wrong!');
+		},
+	});
+	const updateFeatureMutation = createMutation({
+		mutationFn: updateRequestedFeature,
+		onSuccess: (data) => {
+			const transformedData = transformFeatureRequest(data);
+			queryClient.setQueryData(
+				[() => '/requestedFeatures', { id: transformedData.id }],
+				transformedData,
+			);
+			toast.success(`Feature ${data.name} has been updated`);
+		},
+		onError: () => {
+			toast.error('Oops! Something wrong!');
+		},
+	});
+	const deleteFeatureMutation = createMutation({
+		mutationFn: deleteRequestedFeature,
+		onSuccess: ({ id, done }) => {
+			if (done) {
+				queryClient.invalidateQueries({
+					queryKey: ['/requestedFeatures'],
+				});
+			}
+		},
+		onError: () => {
+			toast.error('Oops! Something wrong!');
+		},
+	});
 	const [isOpen, setIsOpen] = createSignal<boolean>(false);
 	const [selectedFeature, setSelectedFeature] = createSignal<
 		FeatureRequest | undefined
@@ -58,6 +106,24 @@ export const RequestsTable: Component<RequestsTableProps> = (props) => {
 		setSelectedFeature(undefined);
 	}
 
+	async function onSubmit(
+		values: Pick<FeatureRequest, 'name' | 'description' | 'done'>,
+	) {
+		const selectedRF = selectedFeature();
+		if (!selectedRF) {
+			await createFeatureMutation.mutateAsync({
+				name: values.name,
+				description: values.description ?? null,
+			});
+		} else {
+			await updateFeatureMutation.mutateAsync({
+				...selectedRF,
+				...values,
+			});
+		}
+		closeDialog();
+	}
+
 	const columns: ColumnDef<FeatureRequest>[] = [
 		{
 			accessorKey: 'name',
@@ -72,7 +138,11 @@ export const RequestsTable: Component<RequestsTableProps> = (props) => {
 		{
 			accessorKey: 'author',
 			header: () => 'Author',
-			cell: (info) => <Avatar name={info.getValue() as string} />,
+			cell: (info) => (
+				<Avatar
+					name={(info.getValue() as FeatureRequest['author']).name}
+				/>
+			),
 		},
 		{
 			id: 'actions',
@@ -90,9 +160,13 @@ export const RequestsTable: Component<RequestsTableProps> = (props) => {
 					</Button>
 					<Button
 						type="button"
-						disabled
 						variant="danger"
 						class="rounded-full p-2 ml-2"
+						onClick={() =>
+							deleteFeatureMutation.mutateAsync(
+								info.row.original.id,
+							)
+						}
 					>
 						<AiFillDelete />
 					</Button>
@@ -156,7 +230,7 @@ export const RequestsTable: Component<RequestsTableProps> = (props) => {
 					</For>
 				</tbody>
 			</table>
-			<div class="p-6 flex flex-row flex-nowrap items-center">
+			{/* <div class="p-6 flex flex-row flex-nowrap items-center">
 				<Button
 					type="button"
 					disabled
@@ -189,7 +263,7 @@ export const RequestsTable: Component<RequestsTableProps> = (props) => {
 				>
 					<BiRegularChevronRight class="mx-auto" />
 				</Button>
-			</div>
+			</div> */}
 			<FloatButton
 				type="button"
 				variant="info"
@@ -240,9 +314,7 @@ export const RequestsTable: Component<RequestsTableProps> = (props) => {
 								<div class="mt-6">
 									<RequestFeatureForm
 										initialValues={dialogValues()}
-										onSubmit={(values) =>
-											console.log(values)
-										}
+										onSubmit={onSubmit}
 									/>
 								</div>
 								<div class="absolute z-10 top-2 right-2">

@@ -18,7 +18,7 @@ export const UserMenu: Component<UserMenuProps> = (props) => {
 
 	return (
 		<Popover
-			defaultOpen={true}
+			defaultOpen={false}
 			class="relative flex flex-col justify-center"
 		>
 			{({ isOpen }) => (

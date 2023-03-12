@@ -2,7 +2,6 @@
 import './index.css';
 import { render } from 'solid-js/web';
 import { Router } from '@solidjs/router';
-import 'solid-devtools';
 import { QueryClient, QueryClientProvider } from '@tanstack/solid-query';
 import { Toaster } from 'solid-toast';
 

@@ -19,11 +19,8 @@ const App: Component = () => {
 			fallback={
 				<NotAuthenticated>
 					<Routes>
-						<Route path="/login" component={Login} />
-						<Route
-							path={['/registration', '/*']}
-							component={Invitation}
-						/>
+						<Route path={['/login', '/*']} component={Login} />
+						<Route path="/registration" component={Invitation} />
 					</Routes>
 				</NotAuthenticated>
 			}

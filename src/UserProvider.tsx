@@ -28,10 +28,15 @@ type UserAPI = {
 
 const UserContext = createContext<UserAPI>();
 
+const [user, setUser] = createSignal<User | null>(readStorage().user ?? null);
+
+export function clientSignOut() {
+	setUser(null);
+	clearStorage();
+	signOut();
+}
+
 export const UserProvider: ParentComponent = (props) => {
-	const [user, setUser] = createSignal<User | null>(
-		readStorage().user ?? null,
-	);
 	const navigate = useNavigate();
 	const userAPI: UserAPI = {
 		user,
@@ -41,9 +46,7 @@ export const UserProvider: ParentComponent = (props) => {
 			navigate('/', { replace: true });
 		},
 		signOut() {
-			setUser(null);
-			clearStorage();
-			signOut();
+			clientSignOut();
 			navigate('/login', { replace: true });
 		},
 	};
@@ -57,4 +60,14 @@ export const UserProvider: ParentComponent = (props) => {
 
 export function useUser() {
 	return useContext(UserContext);
+}
+
+export function clearUser() {
+	const userAPI = useUser();
+
+	if (userAPI) {
+		userAPI.signOut();
+	} else {
+		clientSignOut();
+	}
 }
