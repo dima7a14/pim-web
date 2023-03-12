@@ -267,7 +267,7 @@ export const RequestsTable: Component<RequestsTableProps> = (props) => {
 			<FloatButton
 				type="button"
 				variant="info"
-				class="rounded-full text-5xl p-2 -bottom-2 -right-4 shadow-md hover:shadow-lg active:shadow"
+				class="rounded-full text-5xl p-2 -bottom-8 -right-8 shadow-md hover:shadow-lg active:shadow"
 				onClick={() => openDialog()}
 			>
 				<AiOutlinePlus />
